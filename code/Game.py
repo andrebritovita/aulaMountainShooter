@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 import pygame
 import pygame.mixer
+from pygame import event
 
-from code.Const import WIN_WIDTH, WIN_HEIGHT
+from code.Const import WIN_WIDTH, WIN_HEIGHT, MENU_OPTION
+from code.Level import Level
 from code.Menu import Menu
 
 
@@ -16,5 +18,15 @@ class Game:
 
         while True:
             menu = Menu(self.window)
-            menu.run()
-            pass
+            menu_return = menu.run()  # Recebe uma String
+
+            # Se menu_option for qualquer uma das Strings das posições 0, 1 ou 2
+            # a condição será True e o bloco de código será executado
+            if menu_return in ([MENU_OPTION[0], MENU_OPTION[1],MENU_OPTION[2]]):
+                level = Level(self.window, 'Level 1', menu_return)
+                level_return = level.run()
+            elif menu_return == MENU_OPTION[4]:
+                pygame.quit()  # Close Window
+                quit()  # End pygame
+            else:
+                pass
